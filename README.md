@@ -1,46 +1,71 @@
-# Astro Starter Kit: Basics
+# jonas.zip
+
+Small Astro site for a personal profile/link page. Page content comes from `data.json`; the build outputs a static site to `dist/`.
+
+You can totally fork this to build your own. Shouldn't take more than a couple of minutes.
+
+## Update Content
+
+Edit `data.json`.
+
+Top-level values:
+
+- `url`: canonical site URL used in metadata.
+- `title`: display name and page title - probably your name!
+- `description`: short bio shown under the name and used for share text.
+- `image`: profile image URL, 160x160 is a good size.
+- `fields`: optional small profile facts. Current supported values are `occupation` and `location`.
+- `theme.color`: brand color for light mode.
+- `theme.colorDark`: brand color for dark mode.
+- `theme.favicon`: favicon image URL.
+- `theme.shareImage`: social preview image URL.
+- `theme.headerDecoration`: show or hide the angled header background.
+- `theme.monogramElement`: inline SVG shown next to the title, don't set width/height in the inline SVG.
+- `build.trackingScript`: optional raw tracking script injected into the page head.
+- `blocks`: ordered page sections.
+
+Block values:
+
+- `service-links`: a row of social/contact icons. Services usually use `username`; `email` uses `email`; `signal`, `mastodon`, and `discord` use a full `link`.
+- `newsletter`: signup form with `action`, `title`, and `description`.
+- `link`: a link card with `url`, optional `title`, optional `description`, and either `image` or `icon`.
+
+Supported service/icon names:
+
+`bluesky`, `discord`, `dribbble`, `email`, `facebook`, `github`, `instagram`, `letterboxd`, `linkedin`, `mastodon`, `medium`, `messenger`, `pinterest`, `reddit`, `signal`, `speakerdeck`, `substack`, `telegram`, `threads`, `tiktok`, `twitch`, `twitter`, `x`, `youtube`.
+
+## Alternate Data
+
+`data.json` is the default. Build with another JSON file when needed:
 
 ```sh
-pnpm create astro@latest -- --template basics
+pnpm build -- --site-data=data-simple.json
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The same picker also accepts `--data=...` or `SITE_DATA=...`.
 
-## 🚀 Project Structure
+## Build
 
-Inside of your Astro project, you'll see the following folders and files:
+Install dependencies:
 
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```sh
+pnpm install
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+Run locally:
 
-## 🧞 Commands
+```sh
+pnpm dev
+```
 
-All commands are run from the root of the project, from a terminal:
+Build production files:
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
+```sh
+pnpm build
+```
 
-## 👀 Want to learn more?
+Preview the built site:
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+```sh
+pnpm preview
+```
