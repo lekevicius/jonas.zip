@@ -4,11 +4,14 @@
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "node scripts/build.mjs",
+    "build:astro": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "currentSVG": "find src -name '*.svg' | xargs sed -i .bak 's/#000/currentColor/g'; find src -name '*.bak' -delete"
   },
   "dependencies": {
-    "astro": "^5.13.3"
+    "astro": "^5.13.3",
+    "html-minifier-terser": "^7.2.0"
   }
 }
