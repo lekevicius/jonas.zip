@@ -1,0 +1,81 @@
+{
+  "url": "https://jonas.zip",
+  "title": "Jonas Lekevicius",
+  "description": "Inventing on the internet. Previously a product designer, now building Silent.",
+  "image": "https://files.jonas.zip/jonas.zip/ghibli.jpg",
+  "fields": {
+    "occupation": "Founder at Silent",
+    "location": "Vilnius, Lithuania"
+  },
+  "theme": {
+    "color": "#576731",
+    "colorDark": "#D7E0C3",
+    "favicon": "https://files.jonas.zip/jonas.zip/favicon.png",
+    "shareImage": "https://files.jonas.zip/jonas.zip/social-share.jpg",
+    "headerDecoration": true
+  },
+  "blocks": [
+    {
+      "type": "service-links",
+      "services": [
+        {
+          "service": "email",
+          "email": "jonas@lekevicius.com"
+        },
+        {
+          "service": "x",
+          "username": "lekevicius"
+        },
+        {
+          "service": "linkedin",
+          "username": "lekevicius"
+        },
+        {
+          "service": "instagram",
+          "username": "lekevicius"
+        },
+        {
+          "service": "signal",
+          "link": "https://signal.me/#eu/519y9OoMmKjPzHFsP0XUP5MNP8lnBpytNLLocKpiIcX-x_LnkrpOu7Zs7uH96Ka7"
+        },
+        {
+          "service": "telegram",
+          "username": "lekevicius"
+        },
+        {
+          "service": "facebook",
+          "username": "lekevicius"
+        },
+        {
+          "service": "messenger",
+          "username": "lekevicius"
+        }
+      ]
+    },
+    {
+      "type": "newsletter",
+      "action": "https://buttondown.email/api/emails/embed-subscribe/lekevicius",
+      "title": "My monthly newsletter",
+      "description": "I write about my projects, AI, and delightful internet discoveries"
+    },
+    {
+      "type": "link",
+      "url": "https://dubitai.com",
+      "image": "https://files.jonas.zip/jonas.zip/dubitai.png",
+      "title": "Du Bitai",
+      "description": "My weekly tech news podcast, in Lithuanian. Subscribe on YouTube!"
+    },
+    {
+      "type": "link",
+      "url": "https://silent.app",
+      "image": "https://files.jonas.zip/jonas.zip/silent.jpg",
+      "title": "Silent",
+      "description": "Encrypted team communication platform I'm building"
+    },
+    {
+      "type": "link",
+      "url": "https://lekevicius.com/",
+      "description": "More projects and bio"
+    }
+  ]
+}

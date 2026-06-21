@@ -1,0 +1,112 @@
+{
+  "url": "https://jonas.zip",
+  "title": "Jonas Lekevicius",
+  "description": "Inventing on the internet. Previously a product designer, now building Orb Land.",
+  "image": "https://files.jonas.zip/jonas.zip/profile.jpg",
+  "fields": {
+    "occupation": "Founder at Silent",
+    "location": "Vilnius, Lithuania"
+  },
+  "theme": {
+    "color": "#395358",
+    "colorDark": "#AABDDB",
+    "favicon": "https://files.jonas.zip/jonas.zip/favicon.png",
+    "shareImage": "https://files.jonas.zip/jonas.zip/social-share.jpg",
+    "headerDecoration": true,
+    "monogramElement": "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\" fill=\"none\"><path d=\"M16 32C24.8366 32 32 24.8366 32 16C32 11.9422 30.4895 8.23724 28 5.4167V16C28 22.6274 22.6274 28 16 28C14.5975 28 13.2511 27.7594 12 27.3172V16C12 13.7909 13.7909 12 16 12V8C11.5817 8 8 11.5817 8 16V29.8595C10.3534 31.2208 13.0857 32 16 32Z M4 26.5833V16C4 9.37258 9.37258 4 16 4C17.4025 4 18.7489 4.24062 20 4.68282V16C20 18.2091 18.2091 20 16 20V24C20.4183 24 24 20.4183 24 16V2.14052C21.6466 0.779154 18.9143 0 16 0C7.16344 0 0 7.16344 0 16C0 20.0578 1.51055 23.7628 4 26.5833Z\" fill=\"currentColor\" /></svg>"
+  },
+  "build": {
+    "trackingScript": "<script defer data-domain=\"jonas.zip\" src=\"https://clicks.jonas.zip/js/script.hash.outbound-links.js\"></script><script>window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }</script>"
+  },
+  "blocks": [
+    {
+      "type": "newsletter",
+      "action": "https://buttondown.email/api/emails/embed-subscribe/lekevicius",
+      "title": "My monthly newsletter",
+      "description": "I write about my projects, AI, and other things I'm working on"
+    },
+    {
+      "type": "link",
+      "url": "https://x.com/lekevicius",
+      "icon": "x",
+      "title": "Follow me on X"
+    },
+    {
+      "type": "link",
+      "url": "https://www.linkedin.com/in/lekevicius",
+      "icon": "linkedin",
+      "title": "Follow me on LinkedIn",
+      "description": "Every week I post about how I use AI to build my projects"
+    },
+    {
+      "type": "link",
+      "url": "https://qr.jonas.zip/",
+      "title": "Nicer QR Code Generator",
+      "description": "100% free and designer-friendly"
+    },
+    {
+      "type": "link",
+      "url": "https://lekevicius.com/profile/",
+      "title": "My Profile"
+    },
+    {
+      "type": "link",
+      "url": "https://dubitai.com",
+      "image": "https://files.jonas.zip/jonas.zip/dubitai.png",
+      "title": "Du Bitai",
+      "description": "My weekly tech news podcast, in Lithuanian"
+    },
+    {
+      "type": "link",
+      "url": "https://silent.app",
+      "image": "https://files.jonas.zip/jonas.zip/silent.jpg",
+      "title": "Silent",
+      "description": "Air-gapped and encrypted team communication platform"
+    },
+    {
+      "type": "link",
+      "url": "https://lekevicius.com/",
+      "description": "More projects and bio"
+    },
+    {
+      "type": "service-links",
+      "services": [
+        {
+          "service": "email",
+          "email": "jonas@lekevicius.com",
+          "tooltip": "Copy my email address",
+          "tooltipCopied": "Email copied!"
+        },
+        {
+          "service": "x",
+          "username": "lekevicius",
+          "tooltip": "My random ramblings"
+        },
+        {
+          "service": "instagram",
+          "username": "lekevicius"
+        },
+        {
+          "service": "signal",
+          "link": "https://signal.me/#eu/519y9OoMmKjPzHFsP0XUP5MNP8lnBpytNLLocKpiIcX-x_LnkrpOu7Zs7uH96Ka7"
+        },
+        {
+          "service": "telegram",
+          "username": "lekevicius"
+        },
+        {
+          "service": "facebook",
+          "username": "lekevicius"
+        },
+        {
+          "service": "messenger",
+          "username": "lekevicius"
+        },
+        {
+          "service": "github",
+          "username": "lekevicius"
+        }
+      ]
+    }
+  ]
+}

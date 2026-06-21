@@ -1,6 +1,6 @@
 ---
 import type { SiteData } from '../types'
-import data from '../../data.json' assert { type: 'json' }
+import data from '../site-data'
 
 import Layout from '../layouts/Layout.astro'
 import Header from '../components/Header.astro'
@@ -8,11 +8,12 @@ import NewsletterBlock from '../components/NewsletterBlock.astro'
 import LinkBlock from '../components/LinkBlock.astro'
 import ServiceLinksBlock from '../components/ServiceLinksBlock.astro'
 
-const { blocks } = data as SiteData
+const siteData = data as SiteData
+const { blocks } = siteData
 ---
 
-<Layout data={data as SiteData}>
-  <Header data={data as SiteData} />
+<Layout data={siteData}>
+  <Header data={siteData} />
   <main>
     {
       blocks.map((block) => {
