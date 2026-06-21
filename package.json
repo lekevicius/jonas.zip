@@ -11,7 +11,7 @@
     "currentSVG": "find src -name '*.svg' | xargs sed -i .bak 's/#000/currentColor/g'; find src -name '*.bak' -delete"
   },
   "dependencies": {
-    "astro": "^5.13.3",
+    "astro": "^6.4.8",
     "html-minifier-terser": "^7.2.0"
   }
 }
