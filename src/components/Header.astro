@@ -1,0 +1,63 @@
+---
+import type { SiteData } from '../types'
+import OccupationIcon from '../assets/fields/occupation.svg'
+import LocationIcon from '../assets/fields/location.svg'
+import { Image } from 'astro:assets'
+
+export type Props = {
+  data: SiteData
+}
+const { data }: Props = Astro.props
+const { title, description, image, fields, theme } = data
+
+const siteDescription = description ?? title
+---
+
+{
+  theme?.headerDecoration && (
+    <div class="header-decoration">
+      <Fragment>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" preserveAspectRatio="none" width="100%" height="100%" fill="none" class="decoration-narrow">
+          <path fill="currentColor" d="M0 0h80v50.91L0 80V0Z" />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 160 160" preserveAspectRatio="none" width="100%" height="100%" fill="none" class="decoration-wide">
+          <path fill="currentColor" d="M0 0h160v128L0 160V0Z" />
+        </svg>
+      </Fragment>
+    </div>
+  )
+}
+<header>
+  {
+    image && (
+      <div class="profile-image">
+        <Image src={image} alt={title} width={96} height={96} />
+      </div>
+    )
+  }
+  <div class="profile">
+    <div class="title">
+      {theme?.monogramElement && <div class="monogram" set:html={theme?.monogramElement} />}
+      <h1>{title}</h1>
+    </div>
+    {siteDescription && <p class="description">{siteDescription}</p>}
+    {
+      fields && (
+        <ul class="fields">
+          {fields?.occupation && (
+            <li class="field field-occupation">
+              <OccupationIcon />
+              <span>{fields.occupation}</span>
+            </li>
+          )}
+          {fields?.location && (
+            <li class="field field-location">
+              <LocationIcon />
+              <span>{fields.location}</span>
+            </li>
+          )}
+        </ul>
+      )
+    }
+  </div>
+</header>

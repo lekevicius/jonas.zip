@@ -1,0 +1,85 @@
+---
+import type { ServiceKey } from '../types'
+
+import BlueskyIcon from '../assets/services/bluesky.svg'
+import DiscordIcon from '../assets/services/discord.svg'
+import DribbbleIcon from '../assets/services/dribbble.svg'
+import EmailIcon from '../assets/services/email.svg'
+import FacebookIcon from '../assets/services/facebook.svg'
+import GithubIcon from '../assets/services/github.svg'
+import InstagramIcon from '../assets/services/instagram.svg'
+import LetterboxdIcon from '../assets/services/letterboxd.svg'
+import LinkedinIcon from '../assets/services/linkedin.svg'
+import MastodonIcon from '../assets/services/mastodon.svg'
+import MediumIcon from '../assets/services/medium.svg'
+import MessengerIcon from '../assets/services/messenger.svg'
+import PinterestIcon from '../assets/services/pinterest.svg'
+import RedditIcon from '../assets/services/reddit.svg'
+import SignalIcon from '../assets/services/signal.svg'
+import SpeakerdeckIcon from '../assets/services/speakerdeck.svg'
+import SubstackIcon from '../assets/services/substack.svg'
+import TelegramIcon from '../assets/services/telegram.svg'
+import ThreadsIcon from '../assets/services/threads.svg'
+import TiktokIcon from '../assets/services/tiktok.svg'
+import TwitchIcon from '../assets/services/twitch.svg'
+import TwitterIcon from '../assets/services/twitter.svg'
+import XIcon from '../assets/services/x.svg'
+import YoutubeIcon from '../assets/services/youtube.svg'
+
+export const serviceIcons = {
+  bluesky: BlueskyIcon,
+  discord: DiscordIcon,
+  dribbble: DribbbleIcon,
+  email: EmailIcon,
+  facebook: FacebookIcon,
+  github: GithubIcon,
+  instagram: InstagramIcon,
+  letterboxd: LetterboxdIcon,
+  linkedin: LinkedinIcon,
+  mastodon: MastodonIcon,
+  medium: MediumIcon,
+  messenger: MessengerIcon,
+  pinterest: PinterestIcon,
+  reddit: RedditIcon,
+  signal: SignalIcon,
+  speakerdeck: SpeakerdeckIcon,
+  substack: SubstackIcon,
+  telegram: TelegramIcon,
+  threads: ThreadsIcon,
+  tiktok: TiktokIcon,
+  twitch: TwitchIcon,
+  twitter: TwitterIcon,
+  x: XIcon,
+  youtube: YoutubeIcon,
+}
+
+export type Props = {
+  service: ServiceKey
+}
+const { service }: Props = Astro.props
+---
+
+{service === 'bluesky' && <BlueskyIcon />}
+{service === 'discord' && <DiscordIcon />}
+{service === 'dribbble' && <DribbbleIcon />}
+{service === 'email' && <EmailIcon />}
+{service === 'facebook' && <FacebookIcon />}
+{service === 'github' && <GithubIcon />}
+{service === 'instagram' && <InstagramIcon />}
+{service === 'letterboxd' && <LetterboxdIcon />}
+{service === 'linkedin' && <LinkedinIcon />}
+{service === 'mastodon' && <MastodonIcon />}
+{service === 'medium' && <MediumIcon />}
+{service === 'messenger' && <MessengerIcon />}
+{service === 'pinterest' && <PinterestIcon />}
+{service === 'reddit' && <RedditIcon />}
+{service === 'signal' && <SignalIcon />}
+{service === 'speakerdeck' && <SpeakerdeckIcon />}
+{service === 'substack' && <SubstackIcon />}
+{service === 'telegram' && <TelegramIcon />}
+{service === 'threads' && <ThreadsIcon />}
+{service === 'tiktok' && <TiktokIcon />}
+{service === 'twitch' && <TwitchIcon />}
+{service === 'twitter' && <TwitterIcon />}
+{service === 'x' && <XIcon />}
+{service === 'youtube' && <YoutubeIcon />}

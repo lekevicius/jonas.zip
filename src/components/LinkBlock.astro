@@ -1,0 +1,50 @@
+---
+import type { LinkBlock as LinkBlockType, ServiceKey } from '../types'
+import ArrowIcon from '../assets/arrow.svg'
+import ServiceIcon from './ServiceIcon.astro'
+import { Image } from 'astro:assets'
+
+export type Props = {
+  block: LinkBlockType
+}
+
+const extractDomain = (url: string) => {
+  const domain = new URL(url).hostname
+  return domain
+}
+
+const { block }: Props = Astro.props
+const { url, title, description } = block
+---
+
+{
+  !title && description ? (
+    // Special case for links without a title but with a description
+    <a href={url} class="link link-no-title">
+      <p class="link-description">{description}</p>
+      <div class="link-domain">
+        <span>{extractDomain(url)}</span>
+        <ArrowIcon />
+      </div>
+    </a>
+  ) : (
+    <a href={url} class:list={[`link`, { 'image-link': 'image' in block, 'icon-link': 'icon' in block }]}>
+      {'image' in block && (
+        <div class="link-image">
+          <Image src={block.image!} alt={title ?? 'Link image'} width={96} height={96} />
+        </div>
+      )}
+      <div class="link-content">
+        {'icon' in block && (
+          <div class="link-icon">
+            <ServiceIcon service={block.icon!} />
+          </div>
+        )}
+        <div class="link-text">
+          <h3>{title}</h3>
+          {description && <p>{description}</p>}
+        </div>
+      </div>
+    </a>
+  )
+}

@@ -1,0 +1,113 @@
+---
+import type { ServiceLinksBlock as ServiceLinksBlockType, ServiceKey } from '../types'
+
+import ServiceIcon from './ServiceIcon.astro'
+import ServiceLinkEmail from './ServiceLinkEmail.astro'
+import ServiceLinkUsername from './ServiceLinkUsername.astro'
+
+export type Props = {
+  block: ServiceLinksBlockType
+}
+
+const { block }: Props = Astro.props
+const { services } = block
+
+const manualLinkServices = {
+  signal: {
+    name: 'Message on Signal',
+  },
+  mastodon: {
+    name: 'Follow on Mastodon',
+  },
+  discord: {
+    name: 'Join on Discord',
+  },
+}
+---
+
+<ul class="service-links">
+  {
+    services.map((service) => {
+      if (service.service in manualLinkServices && 'link' in service) {
+        return (
+          <li class="service-link service-link-manual">
+            <a href={service.link} target="_blank" rel="noopener noreferrer" aria-label={manualLinkServices[service.service].name} title={manualLinkServices[service.service].name}>
+              <ServiceIcon service={service.service} />
+            </a>
+          </li>
+        )
+      }
+      if (service.service === 'email' && 'email' in service) {
+        return <ServiceLinkEmail service={service} />
+      }
+      // the rest are username services
+      if ('username' in service) {
+        return <ServiceLinkUsername service={service} />
+      }
+    })
+  }
+</ul>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const anchors = document.querySelectorAll('a[title]')
+    anchors.forEach((anchor) => {
+      const title = anchor.getAttribute('title')
+      if (!title) return
+      if (!anchor.hasAttribute('data-title')) {
+        anchor.setAttribute('data-title', title)
+      }
+      anchor.removeAttribute('title')
+    })
+  })
+</script>
+<style is:global>
+  @media screen and (min-width: 512px) {
+    a[data-title] {
+      position: relative;
+    }
+
+    a[data-title]::after {
+      content: attr(data-title);
+      position: absolute;
+      left: 50%;
+      bottom: calc(100% + 8px);
+      transform: translate(-50%, 0) scale(0.98);
+      opacity: 0;
+      background: rgba(17, 17, 17, 0.95);
+      color: #fff;
+      font-size: 12px;
+      line-height: 1.2;
+      padding: 6px 8px;
+      border-radius: 6px;
+      white-space: nowrap;
+      max-width: 280px;
+      text-align: center;
+      pointer-events: none;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      transition:
+        opacity 0.15s ease,
+        transform 0.15s ease;
+    }
+
+    a[data-title]:hover::after,
+    a[data-title]:focus-visible::after {
+      opacity: 1;
+      transform: translate(-50%, -2px) scale(1);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    a[data-title]::after {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    a[data-title]::after {
+      transition: none;
+    }
+  }
+</style>

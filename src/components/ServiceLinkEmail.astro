@@ -1,0 +1,220 @@
+---
+import type { EmailService } from '../types'
+import EmailIcon from '../assets/services/email.svg'
+
+export type Props = {
+  service: EmailService
+}
+
+const { service }: Props = Astro.props
+const { email, tooltip, tooltipCopied } = service
+const encodedEmail = Buffer.from(email).toString('base64')
+---
+
+<li class="service-link service-link-email">
+  <a href="#" aria-label={tooltip || 'Copy email address'} data-title={tooltip || 'Copy email address'} data-email-b64={encodedEmail}>
+    <EmailIcon />
+  </a>
+</li>
+
+<script define:vars={{ tooltip, tooltipCopied }} lang="js">
+  // Delegate click to handle any number of email copy links on the page
+  const DEFAULT_TOOLTIP = tooltip || 'Copy email address'
+  const DEFAULT_TOOLTIP_COPIED = tooltipCopied || 'Email copied!'
+
+  const getOriginalTitle = (anchor) => {
+    const existing = anchor.getAttribute('data-tt-original')
+    if (existing) return existing
+    const orig = anchor.getAttribute('data-title') || DEFAULT_TOOLTIP
+    anchor.setAttribute('data-tt-original', orig)
+    return orig
+  }
+
+  const revertTooltip = (anchor) => {
+    const orig = anchor.getAttribute('data-tt-original') || DEFAULT_TOOLTIP
+    anchor.setAttribute('data-title', orig)
+  }
+
+  const clearPendingRevert = (anchor) => {
+    const pending = anchor.getAttribute('data-tt-timeout')
+    if (pending) {
+      clearTimeout(Number(pending))
+      anchor.removeAttribute('data-tt-timeout')
+    }
+  }
+
+  const handleClick = (event) => {
+    const anchor = event.target?.closest('a[data-email-b64]')
+    if (!anchor) return
+    event.preventDefault()
+
+    const b64 = anchor.getAttribute('data-email-b64')
+    if (!b64) return
+    let decoded = ''
+    try {
+      decoded = atob(b64)
+    } catch (e) {
+      // no-op
+    }
+    if (!decoded) return
+
+    const showToast = (message) => {
+      // Remove any existing toast
+      const existingToast = document.querySelector('.email-copy-toast')
+      if (existingToast) {
+        existingToast.remove()
+      }
+
+      // Create toast element
+      const toast = document.createElement('div')
+      toast.className = 'email-copy-toast'
+      toast.textContent = message
+      document.body.appendChild(toast)
+
+      // Force a reflow to ensure initial state is rendered, then trigger animation
+      toast.offsetHeight
+      requestAnimationFrame(() => {
+        toast.classList.add('email-copy-toast-show')
+      })
+
+      // Remove after delay
+      setTimeout(() => {
+        toast.classList.add('email-copy-toast-hide')
+        setTimeout(() => {
+          if (toast.parentNode) {
+            toast.parentNode.removeChild(toast)
+          }
+        }, 200)
+      }, 2000)
+    }
+
+    const copyText = async (text) => {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(text)
+        return true
+      }
+      // Fallback
+      const textarea = document.createElement('textarea')
+      textarea.value = text
+      textarea.setAttribute('readonly', '')
+      textarea.style.position = 'absolute'
+      textarea.style.left = '-9999px'
+      document.body.appendChild(textarea)
+      textarea.select()
+      try {
+        const ok = document.execCommand('copy')
+        document.body.removeChild(textarea)
+        return ok
+      } catch (err) {
+        document.body.removeChild(textarea)
+        return false
+      }
+    }
+
+    copyText(decoded).then((ok) => {
+      const original = getOriginalTitle(anchor)
+      clearPendingRevert(anchor)
+      anchor.setAttribute('data-title', ok ? DEFAULT_TOOLTIP_COPIED : original)
+
+      // Show toast (hidden on desktop via CSS)
+      if (ok) {
+        showToast(DEFAULT_TOOLTIP_COPIED)
+      }
+
+      // Briefly show copied toast then revert (for desktop tooltips)
+      if (ok) {
+        const id = window.setTimeout(() => {
+          anchor.blur()
+          anchor.setAttribute('data-title', original)
+        }, 1200)
+        anchor.setAttribute('data-tt-timeout', String(id))
+      }
+    })
+  }
+
+  const handleMouseOut = (event) => {
+    const fromEl = event.target
+    const anchor = fromEl?.closest('a[data-email-b64]')
+    if (!anchor) return
+    const toEl = event.relatedTarget
+    if (toEl && anchor.contains(toEl)) return
+    clearPendingRevert(anchor)
+    revertTooltip(anchor)
+    // Ensure focus is not sticky, which would keep :focus-visible active
+    anchor.blur()
+  }
+
+  const handleFocusOut = (event) => {
+    const anchor = event.target?.closest('a[data-email-b64]')
+    if (!anchor) return
+    clearPendingRevert(anchor)
+    revertTooltip(anchor)
+  }
+
+  if (!window.__emailCopyHandlersAdded__) {
+    document.addEventListener('click', handleClick)
+    document.addEventListener('mouseout', handleMouseOut)
+    document.addEventListener('focusout', handleFocusOut)
+    window.__emailCopyHandlersAdded__ = true
+  }
+</script>
+
+<style is:global>
+  .email-copy-toast {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-100%) scale(0.7);
+    background: var(--ink);
+    color: var(--surface);
+    font-size: 14px;
+    line-height: 20px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    white-space: nowrap;
+    z-index: 10000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    transition:
+      transform 0.2s ease-out,
+      opacity 0.2s ease-out,
+      filter 0.2s ease-out;
+    pointer-events: none;
+    opacity: 0;
+    filter: blur(10px);
+  }
+
+  .email-copy-toast-show {
+    transform: translateX(-50%) translateY(0) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+
+  .email-copy-toast-hide {
+    transform: translateX(-50%) translateY(-100%) scale(0.7);
+    opacity: 0;
+    filter: blur(10px);
+    transition:
+      transform 0.2s ease-in,
+      opacity 0.2s ease-in,
+      filter 0.2s ease-in;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .email-copy-toast {
+      background: rgba(255, 255, 255, 0.95);
+      color: #000;
+    }
+  }
+
+  @media screen and (min-width: 512px) {
+    .email-copy-toast {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .email-copy-toast {
+      transition: none;
+    }
+  }
+</style>

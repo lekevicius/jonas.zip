@@ -1,22 +1,93 @@
+---
+import type { SiteData, ServiceLinksBlock as ServiceLinksBlockType, UsernameService } from '../types'
+
+export type Props = {
+  data: SiteData
+}
+
+const { data }: Props = Astro.props
+
+const { url, title, description, image, theme, blocks, build } = data as SiteData
+
+const siteDescription = description ?? title
+const siteIcon = theme?.favicon ?? image ?? undefined
+const siteImage = theme?.shareImage ?? undefined
+
+// find if there are any blocks with type service-links that have a service with either key 'twitter' or 'x'; get that service's username
+const servicesWithTwitter: ServiceLinksBlockType | undefined = blocks.find(
+  (block) => block.type === 'service-links' && block.services.some((service) => service.service === 'twitter' || service.service === 'x')
+) as ServiceLinksBlockType | undefined
+const twitterService = servicesWithTwitter?.services.find((service) => service.service === 'twitter' || service.service === 'x') as UsernameService | undefined
+const twitterUsername = twitterService?.username ?? undefined
+
+const hexToRgb = (hex: string) => {
+  return (hex.replace('#', '').match(/.{1,2}/g) ?? []).map((char) => parseInt(char, 16)).join(' ')
+}
+const themeColor = theme?.color || '#395358'
+const themeColorDark = theme?.colorDark || '#EFD27F'
+const themeColorRgb = hexToRgb(themeColor)
+const themeColorDarkRgb = hexToRgb(themeColorDark)
+---
+
 <!doctype html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" href={siteIcon} />
+    <title>{title}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="anonymous" />
+
+    <meta property="og:title" content={title} />
+    <meta name="twitter:title" content={title} />
+    <meta property="og:site_name" content={title} />
+
+    <meta name="description" content={siteDescription} />
+    <meta property="og:description" content={siteDescription} />
+    <meta name="twitter:description" content={siteDescription} />
+
+    <meta property="og:url" content={url} />
+    <meta name="twitter:url" content={url} />
+
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="author" content={title} />
+    {twitterUsername && <meta name="twitter:site" content={twitterUsername} />}
+    {twitterUsername && <meta name="twitter:creator" content={twitterUsername} />}
+
+    <meta property="og:image" content={siteImage} />
+    <meta name="twitter:image" content={siteImage} />
+
+    {build?.trackingScript && <Fragment set:html={build.trackingScript} />}
+  </head>
+  <body>
+    <div class="container">
+      <slot />
+    </div>
+  </body>
 </html>
 
-<style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		height: 100%;
-	}
+<style define:vars={{ themeColorRgb, themeColorDarkRgb }}>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,100..900&display=swap');
+
+  :root {
+    --surface: rgb(255 255 255);
+  }
+
+  body {
+    --font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, 'Apple Color Emoji', 'Segoe UI Emoji';
+    --brand: var(--themeColorRgb);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --surface: rgb(24 24 24);
+    }
+
+    body {
+      --brand: var(--themeColorDarkRgb);
+    }
+  }
 </style>

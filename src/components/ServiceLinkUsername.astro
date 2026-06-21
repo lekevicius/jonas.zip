@@ -1,0 +1,103 @@
+---
+import type { UsernameService } from '../types'
+import ServiceIcon from './ServiceIcon.astro'
+
+export type Props = {
+  service: UsernameService
+}
+
+const { service }: Props = Astro.props
+const { service: serviceKey, username } = service
+
+const serviceProperties = {
+  bluesky: {
+    tooltip: 'Follow on Bluesky',
+    url: `https://bsky.app/profile/${username}`,
+  },
+  dribbble: {
+    tooltip: 'Follow on Dribbble',
+    url: `https://dribbble.com/${username}`,
+  },
+  facebook: {
+    tooltip: 'Follow on Facebook',
+    url: `https://facebook.com/${username}`,
+  },
+  github: {
+    tooltip: 'Follow on GitHub',
+    url: `https://github.com/${username}`,
+  },
+  instagram: {
+    tooltip: 'Follow on Instagram',
+    url: `https://instagram.com/${username}`,
+  },
+  letterboxd: {
+    tooltip: 'Follow on Letterboxd',
+    url: `https://letterboxd.com/${username}`,
+  },
+  linkedin: {
+    tooltip: 'Follow on LinkedIn',
+    url: `https://linkedin.com/in/${username}`,
+  },
+  medium: {
+    tooltip: 'Follow on Medium',
+    url: `https://medium.com/@${username}`,
+  },
+  messenger: {
+    tooltip: 'Message on Messenger',
+    url: `https://m.me/${username}`,
+  },
+  pinterest: {
+    tooltip: 'Follow on Pinterest',
+    url: `https://pinterest.com/${username}`,
+  },
+  reddit: {
+    tooltip: 'Follow on Reddit',
+    url: `https://reddit.com/user/${username}`,
+  },
+  speakerdeck: {
+    tooltip: 'Follow on SpeakerDeck',
+    url: `https://speakerdeck.com/${username}`,
+  },
+  substack: {
+    tooltip: 'Subscribe on Substack',
+    url: `https://substack.com/${username}`,
+  },
+  telegram: {
+    tooltip: 'Message on Telegram',
+    url: `https://t.me/${username}`,
+  },
+  threads: {
+    tooltip: 'Follow on Threads',
+    url: `https://threads.net/${username}`,
+  },
+  tiktok: {
+    tooltip: 'Follow on TikTok',
+    url: `https://tiktok.com/@${username}`,
+  },
+  twitch: {
+    tooltip: 'Follow on Twitch',
+    url: `https://twitch.tv/${username}`,
+  },
+  twitter: {
+    tooltip: 'Follow on Twitter',
+    url: `https://x.com/${username}`,
+  },
+  x: {
+    tooltip: 'Follow on X',
+    url: `https://x.com/${username}`,
+  },
+  youtube: {
+    tooltip: 'Subscribe on YouTube',
+    url: `https://youtube.com/${username}`,
+  },
+} satisfies Record<UsernameService['service'], { tooltip: string; url: string }>
+
+const getServiceUrl = (serviceKey: UsernameService['service']) => serviceProperties[serviceKey].url
+const getServiceTooltip = (serviceKey: UsernameService['service']) => serviceProperties[serviceKey].tooltip
+---
+
+<li class="service-link service-link-username">
+  <a href={getServiceUrl(serviceKey)} target="_blank" rel="noopener noreferrer" aria-label={service.tooltip || getServiceTooltip(serviceKey)} title={service.tooltip || getServiceTooltip(serviceKey)}>
+    <ServiceIcon service={serviceKey} />
+  </a>
+</li>
